@@ -1,0 +1,6 @@
+Frontend:
+Welcome screen
+login/register screen
+profile screen
+friends screen
+message screen
