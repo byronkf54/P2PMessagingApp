@@ -1,25 +1,36 @@
-// App.js
-import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import logo from './logo.svg';
+import './App.css';
+import { Component } from 'react';
 
-// pages
-import { Home } from './views/Home';
-import { Login } from './views/Login';
-import { Register } from './views/Register';
-import { RegisterForm } from './components/RegisterForm';
+class App extends Component{
 
-export default function App() {
-  const [cartIsEmpty] = useState(true);
+  constructor(props) {
+    super(props);
+    this.state = { apiResponse: "" };
+  }
 
-  return (
-    <div style={{position: 'fixed', bottom: 0, right: 0, left: 0, top: 0}} >      
-      <Router>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/Register" element={<RegisterForm />} />
-          <Route path="/Login" element={<Login />} />
-        </Routes>
-      </Router>
-    </div>
-  );
+  callAPI() {
+    fetch("http://localhost:9000/testAPI?test=1&test2=2&test3=3&test4=4")
+      .then(res => res.text())
+      .then(res => this.setState({ apiResponse: res }))
+      .catch(err => err);
+  }
+
+  componentDidMount() {
+      this.callAPI();
+  }
+
+  render() {
+    return (
+      <div className="App">
+        <header className="App-header">
+          <img src={logo} className="App-logo" alt="logo" />
+          <h1 className="App-title">Welcome to React</h1>
+        </header>
+        <p className="App-intro">{this.state.apiResponse}</p>
+      </div>
+    );
+  }
 }
+
+export default App;
