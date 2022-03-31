@@ -16,4 +16,11 @@ router.post('/createAsync', function(req, res, next){
   });
 });
 
+router.post('/login', function(req, res, next){
+  // code to add data to DB
+  mysql.login(req.query["email"], req.query["password"]).then((result) => {
+    res.send("The login worked correctly: " + result);
+  });
+});
+
 module.exports = router;

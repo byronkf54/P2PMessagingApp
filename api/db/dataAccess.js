@@ -29,5 +29,23 @@ module.exports = {
         var sql = `SELECT COUNT(*) AS userCount FROM users WHERE Email = '${email}'`;
         var results = await con.promise().query(sql);
         return results[0][0].userCount;
+    },
+    getUser : async function(email) {
+        var sql = `SELECT * FROM users WHERE Email = '${email}' LIMIT 1`;
+        var results = await con.promise().query(sql);
+        return results[0][0];
+    },
+    login : async function(email, password) { // TODO : create ENUM for return value
+        // get user - then match password
+        var user = await this.getUser(email);
+        if (user != null) { // match password
+            if (bcrypt.compareSync(password, user.Password))
+                return true;
+            else
+                return "Wrong password";
+        }
+        else {
+            return "Wrong email";
+        }
     }
 }
