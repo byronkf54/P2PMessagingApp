@@ -1,4 +1,5 @@
 import React, { Component, useState } from 'react';
+import { useNavigate } from "react-router";
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
 
@@ -36,7 +37,9 @@ export const RegisterForm = () =>
         setEmail("");
         setPassword("");        
         setMessage("User created successfully");
+        // show a go to account screen button        
         $("#registerForm").hide();
+        $('#GoToAccount').show();
       }
       else {
         setMessage(res);
@@ -76,6 +79,10 @@ export const RegisterForm = () =>
       </form>
 
     <div className="message">{message ? <p>{message}</p> : null}</div>
+    
+    <div className="d-flex flex-column" id='GoToAccount' style={{display:'none'}}>
+      <button className="btn btn-default" onClick={() => this.nextPath('/Login')}>Go To Account</button>
+    </div>
     </div>
   );
 

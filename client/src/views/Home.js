@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router"
+import { useNavigate } from "react-router";
 
 export function Home() {
 
@@ -13,7 +13,7 @@ export function Home() {
             </div>
 
             <div className="d-flex flex-column justify-content-center">
-                <div id="navigationButtons" className=" mb-3">
+                <div id="navigationButtons" className="mb-3">
                     <button className="btn btn-default" onClick={() => navigate('/register')}>Register</button>
                 </div>
             </div>
