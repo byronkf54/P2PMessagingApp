@@ -1,4 +1,6 @@
 var mysql = require('mysql2');
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 
 var con = mysql.createConnection({
     host: "localhost",
@@ -15,9 +17,9 @@ con.connect(function(err) {
 module.exports = {
     createAsync : async function(name, email, password) {
         // check if email exists already
-        if (await this.emailExists(email) == 0) {
-            // if the email is unique we can add the user
-            var sql = `INSERT INTO users (Name, Email, Password) VALUES ('${name}', '${email}', '${password}')`;
+        if (await this.emailExists(email) == 0) { // if the email is unique we can add the user
+            const hash = bcrypt.hashSync(password, saltRounds); // need to encrypt the password before adding to SQL
+            var sql = `INSERT INTO users (Name, Email, Password) VALUES ('${name}', '${email}', '${hash}')`;
             await con.promise().query(sql);
             return await this.emailExists(email) == 1 ? true : false;
         }
